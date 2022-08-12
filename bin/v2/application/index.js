@@ -5,24 +5,50 @@ const usecaseFile = require("../create/files/application/usecase.js");
 const providerFile = require("../create/files/application/provider.js");
 const repositoryFile = require("../create/files/application/repository.js");
 
-function main(entity, structure, rootDir, dirUsecase = '') {
+const createCommands = {
+    "usecase": generateUseCase,
+    "provider": generateProvider,
+    "repository": generateRepository,
+    "domain": generateDomain,
+    "error": generateError,
+    "controller": generateController,
+    "route": generateRoute,
+}
 
-    // creating initial files
-    if (structure === 'usecases') {
-        if (dirUsecase) {
-            dir = directory.main("application/" + structure + "/" + dirUsecase, rootDir);
-            usecaseFile.create(entity, dir);
-        } else {
-            dir = directory.main("application/" + structure + "/" + entity, rootDir);
-            usecaseFile.create(entity, dir);
-        }
-    } else if (structure === 'providers') {
-        dir = directory.main("application/" + structure, rootDir);
-        providerFile.create(entity, dir);
-    } else if (structure === 'repositories') {
-        dir = directory.main("application/" + structure + "/" + entity, rootDir);
-        repositoryFile.create(entity, dir);
-    } else {
-        console.log('command not found.');
-    }
+function generateUseCase(structure, entity, rootDir) {
+    dir = directory.main("application/" + structure, rootDir);
+    usecaseFile.create(entity, dir);
+}
+
+function generateProvider(structure, entity, rootDir) {
+    dir = directory.main("application/" + structure, rootDir);
+    providerFile.create(entity, dir);
+}
+
+function generateRepository(structure, entity, rootDir) {
+    dir = directory.main("application/" + structure + "/" + entity, rootDir);
+    repositoryFile.create(entity, dir);
+}
+
+function generateDomain(structure, entity, rootDir) {
+    console.log("Create Domain command not implemented yet");
+}
+
+function generateError(structure, entity, rootDir) {
+    console.log("Create Error command not implemented yet");
+}
+
+function generateController(structure, entity, rootDir) {
+    console.log("Create Controller ommand not implemented yet");
+}
+
+function generateRoute(structure, entity, rootDir) {
+    console.log("Create Route command not implemented yet");
+}
+
+function main(structure, entity, rootDir) {
+
+    if (createCommands[structure]) 
+        createCommands[structure](structure, entity, rootDir)
+    else console.log('command not found.');
 }
