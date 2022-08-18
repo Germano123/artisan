@@ -4,10 +4,20 @@
   "description": "CLI for project structuring using ExpressJs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "artisan": "node bin/v2/index.js",
+    "artisan:i": "node bin/v2/index.js --i",
+    "artisan:init": "node bin/v2/index.js --init",
+    "artisan:create": "node bin/v2/index.js --create"
   },
   "keywords": [
-    "cli", "framework", "microframework", "nodejs", "javascript", "typescript", "package"
+    "cli",
+    "framework",
+    "microframework",
+    "nodejs",
+    "javascript",
+    "typescript",
+    "package"
   ],
   "bin": {
     "artisan": "./bin/v2/index.js"
@@ -23,6 +33,7 @@
   },
   "dependencies": {
     "fs-extra": "^10.0.1",
-    "yargs": "^17.4.0"
+    "yargs": "^17.4.0",
+    "yargs-interactive": "^3.0.1"
   }
 }
