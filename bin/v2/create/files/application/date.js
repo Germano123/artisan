@@ -12,13 +12,11 @@ function create(name = "date", dir) {
 
         fs.appendFile(
             file,
-            `
-            export interface IDateProvider {
-                addHours(date: Date, housToAdd: number): Date;
-                subHours(date: Date, housToSubtract: number): Date;
-                isAfter(date: Date, dateToCompare: Date): boolean;
-              }              
-            `, function (err) {
+`export interface IDateProvider {
+    addHours(date: Date, housToAdd: number): Date;
+    subHours(date: Date, housToSubtract: number): Date;
+    isAfter(date: Date, dateToCompare: Date): boolean;
+}`, function (err) {
             if (err) throw err;
             console.log(name + ".provider.ts has created successfuly.");
         });

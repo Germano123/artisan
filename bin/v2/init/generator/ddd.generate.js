@@ -1,7 +1,6 @@
 module.exports = { generateDDD: generate }
 
 const src = require("../../create/directories/src.js");
-const v2 = require("../../create/directories/directories.js");
 const directory = require("../../create/directories/directoryOnSrc.js");
 const dto = require("../../create/files/domain/dto.js");
 const entity = require("../../create/files/domain/entity.js");
@@ -31,65 +30,89 @@ const exception = require("../../create/files/infra/exception.middleware.js");
 const server = require("../../create/files/infra/server.js");
 const indexRoute = require("../../create/files/infra/indexRoute.js");
 const route = require("../../create/files/infra/route.js");
-const initialFiles = require("../../create/files/root/root.js");
+const rootFiles = require("../../create/files/root/root.js");
 
-function generate(pathDir) {
+const fs = require("fs");
+const path = require("path");
+const generator = require("../generator.js");
+
+async function generate(pathDir) {
     console.log("Generating architecture Domain-Driven Design");
-    // const directories = ["application", "core", "domain", "errors", "infra", "tests"];
+    const architectureDirs = ["application", "core", "domain", "errors", "infra", "tests"];
 
-    // // creating src directory
+    // creating src directory
     // src.main(pathDir);
-    // // add initial files in your root project directory
-    // initialFiles.main(pathDir);
-    // // creating main directories
-    // v2.main(directories, pathDir);
-    // // creating initial files
-    // application(pathDir);
-    // core(pathDir);
-    // domain(pathDir);
-    // errors(pathDir);
-    // infra(pathDir);
-    // tests(pathDir);
+    await generator.generateFolder(pathDir);
+
+    // add root files in your root project directory
+    await rootFiles.main(pathDir);
+    
+    // creating main directories
+    architectureDirs.forEach((dirName) => {
+        generator.generateFolder(pathDir, dirName);
+    });
+
+    // creating initial files
+    application(pathDir);
+    core(pathDir);
+    domain(pathDir);
+    errors(pathDir);
+    infra(pathDir);
+    tests(pathDir);
 }
 
+// TODO: refactor this
 /**
  * Functions for creating directories and initial files.
  */
- function application(dir){
+ function application(pathDir){
     // creating directories for application
-    const dirProvider = directory.main("application/providers", dir);
-    directory.main("application/repositories", dir);
-    directory.main("application/usecases", dir);
-    directory.main("application/views", dir);
+    const applicationDirs = ["providers", "repositories", "usecases", "views"];
+    applicationDirs.forEach((dir) => {
+        generator.generateFolder(pathDir, "application/"+dir);
+    });
 
     // creating files for application
-    date.create("date", dirProvider);
-    jwt.create("jwt", dirProvider);
-    mail.create("mail", dirProvider);
+    // TODO: change responsability to file creation to generator
+    // generator.generateFile(filePath, pathDir+"/src/application/providers");
+    const providerDir = pathDir+"/src/application/providers";
+    date.create("date", providerDir);
+    jwt.create("jwt", providerDir);
+    mail.create("mail", providerDir);
 }
 
-function core(dir){
+function core(pathDir){
     // creating directories for core
-    const dirConfig = directory.main("core/config", dir);
-    const dirDomain = directory.main("core/domain", dir);
-    const dirDtos = directory.main("core/dtos", dir);
-    const dirLogic = directory.main("core/logic", dir);
+    const applicationDirs = ["config", "domain", "dtos", "logic"];
+    applicationDirs.forEach((dir) => {
+        generator.generateFolder(pathDir, "core/"+dir);
+    });
 
     // creating files for core
-    validate_account.create("validate-account", dirConfig);
-    entityCore.create("entity", dirDomain);
-    parse_types.create("parse-types", dirDtos);
-    status.create("status", dirDtos);
-    either.create("either", dirLogic);
-    maybe.create("maybe", dirLogic);
+    const configDir = pathDir+"/src/core/config";
+    const domainDir = pathDir+"/src/core/domain";
+    const dtosDir = pathDir+"/src/core/dtos";
+    const logicDir = pathDir+"/src/core/dtos";
+
+    validate_account.create("validate-account", configDir);
+    entityCore.create("entity", domainDir);
+    parse_types.create("parse-types", dtosDir);
+    status.create("status", dtosDir);
+    either.create("either", logicDir);
+    maybe.create("maybe", logicDir);
 }
 
-function domain(dir){
+function domain(pathDir){
     // creating directories for domain
-    dirUser = directory.main("domain/user", dir);
-    dtoDir = directory.main("domain/user/dtos", dir);
-    entityDir = directory.main("domain/user/entities", dir);
-    mapperDir = directory.main("domain/user/mappers", dir);
+    const applicationDirs = ["user", "user/dtos", "user/entities", "user/mappers"];
+    applicationDirs.forEach((dir) => {
+        generator.generateFolder(pathDir, "domain/"+dir);
+    });
+
+    // creating files for domain
+    const dtoDir = pathDir + "/src/domain/user/dtos";
+    const entityDir = pathDir + "/src/domain/user/entities";
+    const mapperDir = pathDir + "/src/domain/user/mappers";
 
     // creating initial files
     dto.create("user", dtoDir);
@@ -97,31 +120,47 @@ function domain(dir){
     mapper.create("user", mapperDir);
 }
 
-function errors(dir){
+function errors(pathDir){
     // creating directories for domain
-    const errorDir = directory.main("errors", dir);
-
+    generator.generateFolder(pathDir, "errors");
+    
     // creating initial files
+    const errorDir = pathDir + "/src/errors";
+    
     appErrors.create("app", errorDir);
     bad_requestErrors.create("bad-request", errorDir);
     not_foundErrors.create("not-found", errorDir);
     unauthorizedErrors.create("unauthorized", errorDir);
 }
 
-function infra(dir){
+function infra(pathDir){
     // creating directories for infra
-    const adaptersDir = directory.main("infra/adapters", dir);
-    const configDir = directory.main("infra/config", dir);
-    const containerDir = directory.main("infra/container", dir);
-    directory.main("infra/database", dir);
-    const httpDir = directory.main("infra/http", dir);
-    directory.main("infra/http/controllers", dir);
-    const userControllerDir = directory.main("infra/http/controllers/User", dir);
-    const middlewareDir = directory.main("infra/http/middlewares", dir);
-    const routeDir = directory.main("infra/http/routes", dir);
-    directory.main("infra/utils", dir);
+    const applicationDirs = [
+        "adapters",
+        "config",
+        "container",
+        "container",
+        "database",
+        "http",
+        "http/controllers",
+        "http/controllers/User",
+        "http/middlewares",
+        "http/routes",
+        "utils",
+    ];
+    applicationDirs.forEach(async (dir) => {
+        await generator.generateFolder(pathDir, "infra/"+dir);
+    });
 
     // creating initial files
+    const adaptersDir = pathDir + "/src/infra/adapters";
+    const configDir = pathDir + "/src/infra/config";
+    const containerDir = pathDir + "/src/infra/container";
+    const httpDir = pathDir + "/src/infra/http";
+    const userControllerDir = pathDir + "/src/infra/http/controllers/User";
+    const middlewareDir = pathDir + "/src/infra/http/middlewares";
+    const routeDir = pathDir + "/src/infra/routes";
+
     datefns.create("datefns-date", adaptersDir);
     jsonwebtoken.create("jsonwebtoken-jwt", adaptersDir);
     jwtInfra.create("jwt", configDir);
@@ -136,8 +175,8 @@ function infra(dir){
     route.create("User", routeDir);
 }
 
-function tests(dir){
+function tests(pathDir){
     // creating directories for tests
-    directory.main("tests/adapters", dir);
-    directory.main("tests/repositories", dir);
+    generator.generateFolder(pathDir, "tests/adapters");
+    generator.generateFolder(pathDir, "tests/repositories");
 }

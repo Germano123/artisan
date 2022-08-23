@@ -12,18 +12,16 @@ function create(name = "mail", dir) {
 
         fs.appendFile(
             file,
-            `
-            type IMailData = {
-                to: string;
-                subject: string;
-                variables: unknown;
-                path: string;
-              };
+`type IMailData = {
+    to: string;
+    subject: string;
+    variables: unknown;
+    path: string;
+};
               
-              export interface IMailProvider {
-                sendMail(mailData: IMailData): Promise<void>;
-              }              
-            `, function (err) {
+export interface IMailProvider {
+    sendMail(mailData: IMailData): Promise<void>;
+}`, function (err) {
             if (err) throw err;
             console.log(name + ".provider.ts has created successfuly.");
         });

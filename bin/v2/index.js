@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+// @dev This script responsability is to handle Artisan arguments
 
 const yargs = require("yargs");
 const yargsInteractive = require("yargs-interactive");

@@ -12,10 +12,7 @@ function create(name, dir) {
 
         fs.appendFile(
             file,
-            `
-            export interface I${name}Dto {
-            }
-            `, function (err) {
+`export interface I${name}Dto {}`, function (err) {
             if (err) throw err;
             console.log(name + ".dto.ts has created successfuly.");
         });
