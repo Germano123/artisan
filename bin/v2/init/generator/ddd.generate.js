@@ -141,6 +141,7 @@ function infra(pathDir){
         "container",
         "container",
         "database",
+        "routes",
         "http",
         "http/controllers",
         "http/controllers/User",
