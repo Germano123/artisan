@@ -12,15 +12,13 @@ function create(name = "bad-request", dir) {
 
         fs.appendFile(
             file,
-            `
-            import { AppError } from './app.error';
+`import { AppError } from './app.error';
 
-            export class BadRequestError extends AppError {
-                constructor(message: string) {
-                    super(message, 400, 'bab_request_error');
-                }
-            }
-            `, function (err) {
+export class BadRequestError extends AppError {
+    constructor(message: string) {
+        super(message, 400, 'bab_request_error');
+    }
+}`, function (err) {
             if (err) throw err;
             console.log(name + ".error.ts has created successfuly.");
         });

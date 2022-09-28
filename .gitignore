@@ -2,10 +2,15 @@ node_modules
 src
 yarn.lock
 #.editorconfig
-#.env.example
-#.eslintignore
+.env.example
+commitlint.config.js
+jest.config.ts
+jset.setup.ts
+readme.config.artisan.txt
+# .eslintignore
 #.eslintrc.json
 #ormconfig.js
-#prettier.config.js
-#tsconfig.json
+prettier.config.js
+tsconfig.json
 #package-lock.json
+to-do.md

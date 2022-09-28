@@ -1,7 +1,5 @@
 module.exports = { generateDDD: generate }
 
-const src = require("../../create/directories/src.js");
-const directory = require("../../create/directories/directoryOnSrc.js");
 const dto = require("../../create/files/domain/dto.js");
 const entity = require("../../create/files/domain/entity.js");
 const mapper = require("../../create/files/domain/mapper.js");
@@ -32,8 +30,6 @@ const indexRoute = require("../../create/files/infra/indexRoute.js");
 const route = require("../../create/files/infra/route.js");
 const rootFiles = require("../../create/files/root/root.js");
 
-const fs = require("fs");
-const path = require("path");
 const generator = require("../generator.js");
 
 async function generate(pathDir) {
@@ -141,7 +137,6 @@ function infra(pathDir){
         "container",
         "container",
         "database",
-        "routes",
         "http",
         "http/controllers",
         "http/controllers/User",
@@ -160,18 +155,25 @@ function infra(pathDir){
     const httpDir = pathDir + "/src/infra/http";
     const userControllerDir = pathDir + "/src/infra/http/controllers/User";
     const middlewareDir = pathDir + "/src/infra/http/middlewares";
-    const routeDir = pathDir + "/src/infra/routes";
+    const routeDir = pathDir + "/src/infra/http/routes";
 
     datefns.create("datefns-date", adaptersDir);
     jsonwebtoken.create("jsonwebtoken-jwt", adaptersDir);
+
     jwtInfra.create("jwt", configDir);
+    
     index.create("index", containerDir);
     providers.create("providers", containerDir);
     repositories.create("repositories", containerDir);
+    
     server.create("server", httpDir);
+    
     controller.create("User", userControllerDir);
+    
     ensure_authenticated.create("ensure-authenticated", middlewareDir);
+    
     exception.create("exception", middlewareDir);
+    
     indexRoute.create("index", routeDir);
     route.create("User", routeDir);
 }

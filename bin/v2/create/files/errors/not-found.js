@@ -12,15 +12,13 @@ function create(name = "not-found", dir) {
 
         fs.appendFile(
             file,
-            `
-            import { AppError } from './app.error';
+`import { AppError } from './app.error';
 
-            export class NotFoundError extends AppError {
-                constructor(message: string) {
-                    super(message, 404, 'not_found_error');
-                }
-            }
-            `, function (err) {
+export class NotFoundError extends AppError {
+    constructor(message: string) {
+        super(message, 404, 'not_found_error');
+    }
+}`, function (err) {
             if (err) throw err;
             console.log(name + ".error.ts has created successfuly.");
         });

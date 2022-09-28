@@ -12,21 +12,19 @@ function create(name = "app", dir) {
 
         fs.appendFile(
             file,
-            `
-            export class AppError {
-                public readonly message!: string;
+`export class AppError {
+    public readonly message!: string;
               
-                public readonly statusCode!: number;
+    public readonly statusCode!: number;
               
-                public readonly type!: string;
+    public readonly type!: string;
               
-                constructor(message: string, statusCode: number, type: string) {
-                  this.message = message;
-                  this.statusCode = statusCode;
-                  this.type = type;
-                }
-              }              
-            `, function (err) {
+    constructor(message: string, statusCode: number, type: string) {
+        this.message = message;
+        this.statusCode = statusCode;
+        this.type = type;
+    }
+}`, function (err) {
             if (err) throw err;
             console.log(name + ".error.ts has created successfuly.");
         });

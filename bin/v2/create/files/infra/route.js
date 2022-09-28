@@ -12,18 +12,14 @@ function create(name, dir) {
 
         fs.appendFile(
             file,
-            `
-            import { Router } from 'express';
-            import { AuthCustomerController } from '../controllers/${name}/auth-customer.controller';
+`import { Router } from 'express';
+import { AuthCustomerController } from '../controllers/${name}/auth-customer.controller';
 
-            const ${name.toLowerCase()}Router = Router();
+const ${name.toLowerCase()}Router = Router();
+const authCustomer = new AuthCustomerController();
+${name.toLowerCase()}Router.post('/auth-customer', authCustomer.handle);
 
-            const authCustomer = new AuthCustomerController();
-
-            ${name.toLowerCase()}Router.post('/auth-customer', authCustomer.handle);
-
-            export { ${name.toLowerCase()}Router };
-            `, function (err) {
+export { ${name.toLowerCase()}Router };`, function (err) {
             if (err) throw err;
             console.log(name + ".routes.ts has created successfuly.");
         });

@@ -1,39 +1,81 @@
 {
-  "name": "@filipeas/artisan",
-  "version": "0.3.7",
-  "description": "CLI for project structuring using ExpressJs",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "artisan": "node bin/v2/index.js",
-    "artisan:i": "node bin/v2/index.js --i",
-    "artisan:init": "node bin/v2/index.js --init",
-    "artisan:create": "node bin/v2/index.js --create"
-  },
-  "keywords": [
-    "cli",
-    "framework",
-    "microframework",
-    "nodejs",
-    "javascript",
-    "typescript",
-    "package"
-  ],
-  "bin": {
-    "artisan": "./bin/v2/index.js"
-  },
-  "author": "Filipe A.S",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/filipeas/artisan"
-  },
-  "publishConfig": {
-    "@YOUR-USERNAME:registry": "https://npm.pkg.github.com"
-  },
-  "dependencies": {
-    "fs-extra": "^10.0.1",
-    "yargs": "^17.4.0",
-    "yargs-interactive": "^3.0.1"
-  }
+    "name":"@filipeas/artisan",
+    "version":"0.3.7",
+    "description":"CLI for project structuring using ExpressJs",
+    "main":"index.js",
+    "scripts": {
+        "test":"jest",
+        "artisan":"node bin/v2/index.js",
+        "artisan:i":"node bin/v2/index.js --i",
+        "artisan:init":"node bin/v2/index.js --init",
+        "artisan:create":"node bin/v2/index.js --create",
+        "start:dev":"tsnd -r tsconfig-paths/register --exit-child --poll --inspect --ignore-watch node_modules --transpile-only --respawn src/infra/http/server.ts"
+    },
+    "keywords": [
+        "cli",
+        "framework",
+        "microframework",
+        "nodejs",
+        "javascript",
+        "typescript",
+        "package"
+    ],
+    "bin": {
+        "artisan":"./bin/v2/index.js"
+    },
+    "author":"Filipe A.S",
+    "license":"MIT",
+    "repository": {
+        "type":"git",
+        "url":"https://github.com/filipeas/artisan"
+    },
+    "publishConfig": {
+        "@YOUR-USERNAME:registry":"https://npm.pkg.github.com"
+    },
+    "dependencies": {
+        "fs-extra":"^10.0.1",
+        "yargs":"^17.4.0",
+        "yargs-interactive":"^3.0.1",
+        "bcryptjs":"^2.4.3",
+        "cors":"^2.8.5",
+        "date-fns":"^2.28.0",
+        "dotenv":"^16.0.0",
+        "express":"^4.18.1",
+        "express-async-errors": "^3.1.1",
+        "handlebars":"^4.7.7",
+        "jsonwebtoken":"^8.5.1",
+        "multer":"^1.4.4",
+        "nodemailer":"^6.7.5",
+        "reflect-metadata":"^0.1.13",
+        "uuid":"^8.3.2"
+    },
+    "devDependencies": {
+        "@filipeas/artisan":"^0.3.4",
+        "@swc/core":"^1.2.171",
+        "@swc/jest":"^0.2.20",
+        "@types/bcryptjs":"^2.4.2",
+        "@types/cors":"^2.8.12",
+        "@types/express":"^4.17.13",
+        "@types/jest":"^27.4.1",
+        "@types/jsonwebtoken":"^8.5.8",
+        "@types/multer":"^1.4.7",
+        "@types/node":"^17.0.25",
+        "@types/nodemailer":"^6.4.4",
+        "@types/uuid":"^8.3.4",
+        "@typescript-eslint/eslint-plugin":"^5.20.0",
+        "@typescript-eslint/parser":"^5.20.0",
+        "eslint":"^8.13.0",
+        "eslint-config-airbnb-base":"^15.0.0",
+        "eslint-config-prettier":"^8.5.0",
+        "eslint-import-resolver-typescript":"^2.7.1",
+        "eslint-plugin-import":"^2.26.0",
+        "eslint-plugin-prettier":"^4.0.0",
+        "jest":"^27.5.1",
+        "prettier":"^2.6.2",
+        "ts-jest":"^27.1.4",
+        "ts-node":"^10.7.0",
+        "ts-node-dev":"^1.1.8",
+        "ts-node-paths":"^1.0.1",
+        "typescript":"^4.6.3"
+    }
 }

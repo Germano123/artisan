@@ -2,6 +2,7 @@
 module.exports = {
     generate: generate,
     generateFolder: generateFolder,
+    generateFile: generateFile,
     copyFile: copyFile,
 } 
 
@@ -34,8 +35,8 @@ function generate(projectSettings, pathDir) {
 
 // TODO: generate file
 // data to generate, destination path to generate at
-function generateFile(filePath, fileDestination) {
-    // TODO: fsPromises.create()
+async function generateFile(filePath, fileData) {
+    await fsPromises.writeFile(filePath, fileData);
 }
 
 // TODO: copy file from `from` folder to `to` folder

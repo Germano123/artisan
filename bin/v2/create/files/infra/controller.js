@@ -12,26 +12,22 @@ function create(name, dir) {
 
         fs.appendFile(
             file,
-            `
-            import { Request, Response } from 'express';
-            import { container } from 'tsyringe';
+`import { Request, Response } from 'express';
+import { container } from 'tsyringe';
 
-            export class ${name}Controller {
-                async handle(request: Request, response: Response): Promise<Response> {
-                    const { email, storeId, password } = request.body;
+export class ${name}Controller {
+    async handle(request: Request, response: Response): Promise<Response> {
+        const { email, storeId, password } = request.body;
+        const ${name.toLowerCase()} = container.resolve(${name}UseCase);
+        const entity = await ${name.toLowerCase()}.run({ email, storeId, password });
 
-                    const ${name.toLowerCase()} = container.resolve(${name}UseCase);
+        if (entity.isLeft()) {
+            return response.status(entity.value.statusCode).json({ error: entity.value });
+        }
 
-                    const entity = await ${name.toLowerCase()}.run({ email, storeId, password });
-
-                    if (entity.isLeft()) {
-                    return response.status(entity.value.statusCode).json({ error: entity.value });
-                    }
-
-                    return response.json({ entity: entity.value });
-                }
-            }
-            `, function (err) {
+        return response.json({ entity: entity.value });
+    }
+}`, function (err) {
             if (err) throw err;
             console.log(name + ".controller.ts has created successfuly.");
         });
